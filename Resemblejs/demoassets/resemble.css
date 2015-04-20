@@ -58,7 +58,35 @@ footer {
         left: 0;
     }
     #image-diff {
-        margin-left: 0;
+        /*margin-left: 0;*/
         margin-top: 50px;
         border-style: solid;
     }
+
+.small-drop-zone {
+    float: left;
+    width: 430px;
+    margin-left: 0;
+    margin-top: 0;
+}
+
+.small-drop-zone + .small-drop-zone {
+    float: right;
+}
+
+.image-diff {
+    margin: 20px auto 90px;
+    border: 10px dashed #ccc;
+    background-color: #ccc;
+    color: #fff;
+    font-size: 32px;
+    min-height: 330px;
+    line-height: 330px;
+    text-align: center;
+    min-width: 920px;
+    position: relative;
+}
+
+.small-drop-zone img {
+    position: static;
+}
