@@ -9,11 +9,20 @@
 
   var ua = 'Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1C28 Safari/419.3';
 
-  // フォーマット済の日付を取得
-  var date = (new Date).toISOString().split(/[T:-]/).slice(0, 3).join('');
+  /**
+   * フォーマット済の日付を取得
+   * @returns {string}
+   */
+  function dateFormat() {
+    var date = new Date();
+    var y = date.getFullYear();
+    var m = ('0' + (date.getMonth() + 1)).slice(-2);
+    var d = ('0' + date.getDate()).slice(-2);
+    return y + m + d;
+  }
 
   var path = {
-    images: 'images/' + date
+    images: 'images/' + dateFormat()
   };
 
   var renderedUrl = [];
