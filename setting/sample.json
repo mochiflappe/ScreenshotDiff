@@ -1,0 +1,21 @@
+{
+  "ua": "Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1C28 Safari/419.3",
+  "viewSize": {
+    "width": "",
+    "height": ""
+  },
+  "site": [
+    {
+      "url": "https://www.google.co.jp/",
+      "name": "google"
+    },
+    {
+      "url": "http://www.yahoo.co.jp/",
+      "name": "yahoo"
+    },
+    {
+      "url": "https://www.apple.com/jp/",
+      "name": "apple"
+    }
+  ]
+}

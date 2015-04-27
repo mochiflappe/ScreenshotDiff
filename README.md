@@ -9,5 +9,5 @@ $ brew install phantomjs
 ## Screenshot shooting
 
 ```sh
-$ phantomjs screenshot.js
+$ phantomjs screenshot.js sample
 ```

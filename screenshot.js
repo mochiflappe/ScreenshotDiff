@@ -1,22 +1,38 @@
 (function () {
   "use strict";
 
-  var sites = [
-    {url: 'https://www.google.co.jp/', name: 'google'},
-    {url: 'http://www.yahoo.co.jp/', name: 'yahoo'},
-    {url: 'https://www.apple.com/jp/', name: 'apple'}
-  ];
+  var system = require('system');
+  var target = system.args[1];
 
-  var ua = 'Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1C28 Safari/419.3';
-
-  // フォーマット済の日付を取得
-  var date = (new Date).toISOString().split(/[T:-]/).slice(0, 3).join('');
+  var setting = require('./setting/' + target + '.json');
 
   var path = {
-    images: 'images/' + date
+    images: 'images/' + target + '/' + dateFormat()
   };
 
   var renderedUrl = [];
+
+  /**
+   * console装飾
+   * @type {{reset: string, green: string, red: string}}
+   */
+  var consoleColor = {
+    reset: '\u001b[0m',
+    green: '\u001b[32m',
+    red: '\u001b[31m'
+  };
+
+  /**
+   * フォーマット済の日付を取得
+   * @returns {string}
+   */
+  function dateFormat() {
+    var date = new Date();
+    var y = date.getFullYear();
+    var m = ('0' + (date.getMonth() + 1)).slice(-2);
+    var d = ('0' + date.getDate()).slice(-2);
+    return y + m + d;
+  }
 
   /**
    * 配列に値があるか確認する関数
@@ -40,9 +56,11 @@
   function screenshot(site) {
     var page = require('webpage').create();
 
-    page.customHeaders = {
-      'User-Agent': ua
-    };
+    if (setting.ua) {
+      page.customHeaders = {
+        'User-Agent': setting.ua
+      };
+    }
 
     // ベーシック認証
     //page.settings.userName = "name";
@@ -67,7 +85,7 @@
           document.body.bgColor = '#fff';
         });
         page.render(path.images + '/' + site.name + '.png');
-        console.log('captured: ' + site.url);
+        console.log(consoleColor.green + 'captured: ' + site.url + consoleColor.reset);
 
         renderedUrl.push(site.url);
 
@@ -76,15 +94,15 @@
           return self.indexOf(element) === index;
         });
 
-        if (uniqRenderedUrl.length === sites.length) {
+        if (uniqRenderedUrl.length === setting.site.length) {
           phantom.exit();
         }
       }
     }
   }
 
-  for (var i = 0, siteLen = sites.length; i < siteLen; i++) {
-    screenshot(sites[i]);
+  for (var i = 0, siteLen = setting.site.length; i < siteLen; i++) {
+    screenshot(setting.site[i]);
   }
 
 })();
