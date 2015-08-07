@@ -111,8 +111,8 @@
   }
 
   // キュースタック方式で実行
-  var queueu = {},
-      siteIndex = 0;
+  var queueu = {};
+  var siteIndex = 0;
   for( var i = 0; i < limit; i++ ){
     queueu['slot' + i] = null;
   }
