@@ -11,7 +11,7 @@
   };
 
   // 同時接続数
-  var limit = setting.limit || 10
+  var limit = setting.limit || 10;
 
   var renderedUrl = [];
 
@@ -112,7 +112,6 @@
 
   // キュースタック方式で実行
   var queueu = {},
-      timer = null,
       siteIndex = 0;
   for( var i = 0; i < limit; i++ ){
     queueu['slot' + i] = null;
