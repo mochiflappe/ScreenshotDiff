@@ -10,6 +10,9 @@
     images: 'images/' + target + '/' + dateFormat()
   };
 
+  // 同時接続数
+  var limit = setting.limit || 10
+
   var renderedUrl = [];
 
   /**
@@ -51,9 +54,10 @@
 
   /**
    * スクリーンショットを撮影
-   * @param site
+   * @param {Object} site
+   * @param {String} slot
    */
-  function screenshot(site) {
+  function screenshot(site, slot) {
     var page = require('webpage').create();
 
     if (setting.ua) {
@@ -94,15 +98,49 @@
           return self.indexOf(element) === index;
         });
 
+        // キューから削除
+        queueu[slot] = null;
+
         if (uniqRenderedUrl.length === setting.site.length) {
           phantom.exit();
         }
       }
     }
+
+    return slot;
   }
 
-  for (var i = 0, siteLen = setting.site.length; i < siteLen; i++) {
-    screenshot(setting.site[i]);
+  // キュースタック方式で実行
+  var queueu = {},
+      timer = null,
+      siteIndex = 0;
+  for( var i = 0; i < limit; i++ ){
+    queueu['slot' + i] = null;
   }
+
+  /**
+   * Seek empty slot
+   * @return {String}
+   */
+  function seekSlot(){
+    for( var prop in queueu ){
+      if( queueu.hasOwnProperty(prop) && null === queueu[prop] ){
+        return prop;
+      }
+    }
+    return null;
+  }
+
+  var slotTimer = setInterval(function(){
+    var slot;
+    while( slot = seekSlot() ){
+      if( siteIndex >= setting.site.length ){
+        clearInterval(slotTimer);
+        break;
+      }
+      queueu[slot] = screenshot(setting.site[siteIndex], slot);
+      siteIndex++;
+    }
+  }, 500);
 
 })();
