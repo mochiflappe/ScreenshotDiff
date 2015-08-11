@@ -4,6 +4,10 @@
     "width": "",
     "height": ""
   },
+  "BasicAuthentication": {
+    "userName": "",
+    "password": ""
+  },
   "site": [
     {
       "url": "https://www.google.co.jp/",

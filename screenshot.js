@@ -66,9 +66,13 @@
       };
     }
 
-    // ベーシック認証
-    //page.settings.userName = "name";
-    //page.settings.password = "pass";
+    /**
+     * ベーシック認証
+     */
+    if (setting.BasicAuthentication.userName && setting.BasicAuthentication.password) {
+      page.settings.userName = setting.BasicAuthentication.userName;
+      page.settings.password = setting.BasicAuthentication.password;
+    }
 
     page.open(site.url, function () {
       console.log('open: ' + site.url);
