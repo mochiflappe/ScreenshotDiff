@@ -8,6 +8,10 @@
     "userName": "",
     "password": ""
   },
+  "wp_login": {
+    "userName": "",
+    "password": ""
+  },
   "site": [
     {
       "url": "https://www.google.co.jp/",

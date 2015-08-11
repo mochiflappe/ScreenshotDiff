@@ -76,14 +76,33 @@
 
     page.open(site.url, function () {
       console.log('open: ' + site.url);
+      if (site.url.match(/wp-admin/)) {
+        setTimeout(function () {
+          page.evaluate(function () {
+            document.getElementById('user_login').value = setting.wp_login.userName;
+            document.getElementById('user_pass').value = setting.wp_login.password;
+            document.querySelector('form').submit();
+          });
+        }, 5000);
+      }
     });
 
-    // 読み込みがなくなったらレンダリングに移る
     var timer;
-    page.onResourceReceived = function () {
-      timer || clearTimeout(timer);
-      timer = setTimeout(capture, 6000);
-    };
+    if (site.url.match(/wp-admin/)) {
+      page.onLoadFinished = function () {
+        setTimeout(function () {
+          page.onResourceReceived = function () {
+            timer || clearTimeout(timer);
+            timer = setTimeout(capture, 6000);
+          };
+        }, 5000);
+      };
+    } else {
+      page.onResourceReceived = function () {
+        timer || clearTimeout(timer);
+        timer = setTimeout(capture, 6000);
+      };
+    }
 
     function capture() {
       // レンダリングしてないurlを処理
