@@ -4,5 +4,5 @@ node_modules
 images/*
 !images/.gitkeep
 setting/*
-!setting/sample.json
+!setting/example.json
 
